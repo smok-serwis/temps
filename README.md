@@ -47,6 +47,7 @@ Consult the docs for how to disable it.
 
 ## v0.6.5
 
+* works on Python 3.10 and 3.11
 * fixed warnings about signed to unsigned comparison
 
 ## v0.6.4

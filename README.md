@@ -26,19 +26,11 @@ python setup.py install
 
 You need both [snakehouse](https://pypi.org/project/snakehouse/1.2.2/)
 and [tempsdb](https://pypi.org/project/tempsdb/) to compile it from the source,
-though binary wheels for:
+though binary wheels are available for whatever you'd like.
+
+If there's a binary wheel that you would like to have, 
+just drop me an [issue](https://github.com/smok-serwis/tempsdb/issues/new)/
  
-* Linux [manylinux2014]:
-    * x86_64:
-        * Python 3.8
-        * Python 3.9
-    * armv7l:
-        * Python 3.8
-
-
-are available. If you need an extra wheel, compile it yourself
-or just drop me an [issue](https://github.com/smok-serwis/tempsdb/issues/new).
-
 If you're installing it somewhere that you don't need both snakehouse
 and tempsdb installed, compile your own binary wheel with
 

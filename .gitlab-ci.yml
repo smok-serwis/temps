@@ -43,3 +43,39 @@ test_python310:
 test_python311:
   extends: .test_python
   image: python:3.11
+
+
+.build_python:
+  only:
+    - master
+  stage: build
+  script:
+    - pip install --break-system-packages --upgrade Cython setuptools pip
+    - pip install --break-system-packages -r requirements.txt
+    - python setup.py bdist_wheel
+    - cp dist/*.whl .
+  artifacts:
+    paths:
+      - "*.whl"
+
+build_python38:
+  extends: .build_python
+  image: python:3.8
+
+build_python39:
+  extends: .build_python
+  image: python:3.9
+
+
+build_python310:
+  extends: .build_python
+  image: python:3.10
+
+
+build_python38:
+  extends: .build_python
+  image: python:3.11
+
+build_python311_armv7l:
+  extends: .build_python
+  image: zoo.smok.co/build/build:armv7l-python311

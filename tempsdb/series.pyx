@@ -453,7 +453,7 @@ cdef class TimeSeries:
         :raises ValueError: Timestamp not larger than previous timestamp or invalid block size
         :raises InvalidState: the resource is closed
         """
-        cdef int data_len = len(data)
+        cdef unsigned int data_len = len(data)
         if data_len > self.block_size:
             raise ValueError('Data too long')
         data = data + b'\x00'*(self.block_size - data_len)

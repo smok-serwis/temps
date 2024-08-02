@@ -1,5 +1,7 @@
 # tempsdb
 
+Further development of tempsdb has been moved to [our servers](https://git.dms-serwis.com.pl/smokserwis/tempsdb).
+
 [![PyPI](https://img.shields.io/pypi/pyversions/tempsdb.svg)](https://pypi.python.org/pypi/tempsdb)
 [![PyPI version](https://badge.fury.io/py/tempsdb.svg)](https://badge.fury.io/py/tempsdb)
 [![PyPI](https://img.shields.io/pypi/implementation/tempsdb.svg)](https://pypi.python.org/pypi/tempsdb)

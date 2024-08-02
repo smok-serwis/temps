@@ -9,12 +9,12 @@ cdef class TimeSeries:
         object open_lock        # lock to hold while opening or closing chunks
         readonly str path
         readonly str name
-        unsigned int max_entries_per_chunk
+        unsigned unsigned int max_entries_per_chunk
         readonly unsigned long long last_entry_synced
-        readonly int block_size
+        readonly unsigned int block_size
         readonly unsigned long long last_entry_ts
         readonly int gzip_level
-        unsigned int page_size
+        unsigned unsigned int page_size
         readonly dict metadata
         readonly bint descriptor_based_access
         list chunks

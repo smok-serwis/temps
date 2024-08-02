@@ -4,9 +4,8 @@
 [![PyPI version](https://badge.fury.io/py/tempsdb.svg)](https://badge.fury.io/py/tempsdb)
 [![PyPI](https://img.shields.io/pypi/implementation/tempsdb.svg)](https://pypi.python.org/pypi/tempsdb)
 [![Documentation Status](https://readthedocs.org/projects/tempsdb/badge/?version=latest)](http://tempsdb.readthedocs.io/en/latest/?badge=latest)
-[![Maintainability](https://api.codeclimate.com/v1/badges/657b03d115f6e001633c/maintainability)](https://codeclimate.com/github/smok-serwis/tempsdb/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/a0ff30771c71e43e8149/test_coverage)](https://codeclimate.com/github/smok-serwis/tempsdb/test_coverage)
-[![Build Status](https://travis-ci.com/smok-serwis/tempsdb.svg)](https://travis-ci.com/smok-serwis/tempsdb)
+[![Build status](https://git.dms-serwis.com.pl/smokserwis/tempsdb/badges/develop/pipeline.svg)](https://git.dms-serwis.com.pl/smokserwis/tempsdb)
+[![coverage report](https://git.dms-serwis.com.pl/smokserwis/tempsdb/badges/develop/coverage.svg)](https://git.dms-serwis.com.pl/smokserwis/tempsdb/-/commits/develop)
 [![Wheel](https://img.shields.io/pypi/wheel/tempsdb.svg)](https://pypi.org/project/tempsdb/)
 [![License](https://img.shields.io/pypi/l/tempsdb)](https://github.com/smok-serwis/tempsdb)
 

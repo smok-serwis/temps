@@ -54,3 +54,10 @@ Logging
 tempsdb will log when opening and closing series. To prevent this from happening, just call:
 
 .. autofunction:: tempsdb.database.disable_logging
+
+Failing to close things
+-----------------------
+
+Please be keen on manually closing things that are no longer necessary.
+Most destructors check for that and will complain if you forget to manually
+close anything.

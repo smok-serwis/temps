@@ -19,9 +19,27 @@ stages:
   script:
     - python -m coverage run -m nose2 -vv -F
     - python -m coverage report
-
+  coverage: /TOTAL.*\s+(\d+\%)/
 
 
 test_python38:
   extends: .test_python
   image: python:3.8
+
+
+
+test_python39:
+  extends: .test_python
+  image: python:3.9
+
+
+
+test_python310:
+  extends: .test_python
+  image: python:3.10
+
+
+
+test_python311:
+  extends: .test_python
+  image: python:3.11

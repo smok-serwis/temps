@@ -11,6 +11,7 @@ cdef class Chunk:
     cdef:
         TimeSeries parent
         readonly str path
+        bint is_object_closed
         readonly unsigned long long min_ts
         readonly unsigned long long max_ts
         readonly unsigned int block_size
@@ -28,7 +29,7 @@ cdef class Chunk:
     cpdef bytes get_value_at(self, unsigned int index)
     cpdef bytes get_slice_of_piece_at(self, unsigned int index, unsigned int start, unsigned int stop)
     cpdef bytes get_slice_of_piece_starting_at(self, unsigned int index, unsigned int start)
-    cpdef int get_byte_of_piece(self, unsigned int index, unsigned int byte_index) except -1
+    cpdef unsigned char get_byte_of_piece(self, unsigned int index, unsigned int byte_index) except -1
     cpdef unsigned int find_left(self, unsigned long long timestamp)
     cpdef unsigned int find_right(self, unsigned long long timestamp)
     cdef object open_file(self, str path)

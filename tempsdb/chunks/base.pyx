@@ -7,7 +7,7 @@ import mmap
 import warnings
 
 from .gzip cimport ReadWriteGzipFile
-from ..exceptions import Corruption, StillOpen
+from ..exceptions import Corruption, StillOpen, InvalidState
 from ..series cimport TimeSeries
 
 
@@ -182,6 +182,7 @@ cdef class Chunk:
         self.page_size = page_size
         self.parent = parent
         self.closed = False
+        self.is_object_closed = False
         self.path = path
         self.file = self.open_file(path)
         self.file_lock_object = None
@@ -213,7 +214,7 @@ cdef class Chunk:
 
         self.after_init()
 
-    cpdef int get_byte_of_piece(self, unsigned int index, unsigned int byte_index) except -1:
+    cpdef unsigned char get_byte_of_piece(self, unsigned int index, unsigned int byte_index) except -1:
         """
         Return a particular byte of given element at given index.
         
@@ -325,8 +326,12 @@ cdef class Chunk:
 
     cdef int sync(self) except -1:
         """
-        Synchronize the mmap
+        Synchronize the mmap.
+        
+        :raises InvalidState: object is already closed
         """
+        if self.is_object_closed:
+            raise InvalidState('Cannot sync a closed chunk!')
         self.mmap.flush()
         return 0
 
@@ -426,10 +431,12 @@ cdef class Chunk:
         self.sync()
         self.mmap.close()
         self.file.close()
+        self.closed = True
+        self.is_object_closed = True
         return 0
 
     def __del__(self) -> None:
-        if self.closed:
+        if self.is_object_closed or self.closed:
             return
         warnings.warn('You forgot to close a Chunk')
         self.close()

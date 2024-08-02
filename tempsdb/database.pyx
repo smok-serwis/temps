@@ -27,6 +27,8 @@ cdef class Database:
 
     If you forget to, the destructor will do that instead and emit a warning.
 
+    This is internally synchronized thanks to a reentrant lock.
+
     :param path: path to the directory with the database
     :raises DoesNotExist: database does not exist, use `create_database`
 
@@ -35,6 +37,7 @@ cdef class Database:
     """
     def __init__(self, str path):
         if not os.path.isdir(path):
+            self.closed = True
             raise DoesNotExist('Database does not exist')
 
         if not os.path.isdir(os.path.join(path, 'varlen')):
@@ -393,6 +396,7 @@ cdef class Database:
         cdef:
             TimeSeries series
             VarlenSeries var_series
+        self.closed = True
         with self.lock:
             for series in self.open_series.values():
                 series.close()  # because already closed series won't close themselves
@@ -400,7 +404,6 @@ cdef class Database:
             for var_series in self.open_varlen_series.values():
                 var_series.close(True)
             self.open_varlen_series = {}
-        self.closed = True
         if self.mpm_handler is not None:
             self.mpm_handler.cancel()
             self.mpm_handler = None

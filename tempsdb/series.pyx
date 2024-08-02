@@ -111,6 +111,7 @@ cdef class TimeSeries:
         self.path = path
 
         if not os.path.isdir(self.path):
+            self.closed = True
             raise DoesNotExist('Chosen time series does not exist')
 
         cdef:
@@ -130,6 +131,7 @@ cdef class TimeSeries:
             self.metadata = metadata.get('metadata')
             self.gzip_level = metadata.get('gzip_level', 0)
         except (OSError, ValueError, KeyError) as e:
+            self.closed = True
             raise Corruption('Corrupted series: %s' % (e, )) from e
 
         self.open_chunks = {}       # tp.Dict[int, Chunk]
@@ -137,6 +139,7 @@ cdef class TimeSeries:
                                     #: timestamp, is_direct, is_gzip
 
         if not len(files):
+            self.closed = True
             raise Corruption('Empty directory!')
         elif len(files) == 1:
             # empty series
@@ -156,12 +159,14 @@ cdef class TimeSeries:
                 try:
                     self.chunks.append((int(filename), is_direct, is_gzip))
                 except ValueError:
+                    self.closed = True
                     raise Corruption('Detected invalid file "%s"' % (filename, ))
             self.chunks.sort()
 
             try:
                 last_chunk_name, is_direct, is_gzip = self.chunks[-1]
             except IndexError as e:
+                self.closed = True
                 raise Corruption('Corrupted series: %s' % (e, )) from e
             self.last_chunk = self.open_chunk(last_chunk_name, is_direct, is_gzip)
             self.last_entry_ts = self.last_chunk.max_ts
@@ -274,11 +279,11 @@ cdef class TimeSeries:
         """
         cdef:
             Chunk chunk
-            list open_chunks
+            list l_open_chunks
         if self.closed:
             return 0
-        open_chunks = list(self.open_chunks.values())
-        for chunk in open_chunks:
+        l_open_chunks = list(self.open_chunks.values())
+        for chunk in l_open_chunks:
             chunk.close(True)
         if self.mpm is not None:
             self.mpm.cancel()

@@ -384,7 +384,7 @@ cdef class Database:
     def __del__(self):
         if not self.closed:
             warnings.warn('You forgot the close the Database. Please close it explicitly when you '
-                          'are done.', )
+                          'are done.', RuntimeWarning)
             self.close()
 
     cpdef int close(self) except -1:

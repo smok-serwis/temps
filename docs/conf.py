@@ -10,19 +10,19 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
-# import os
-# import sys
-# sys.path.insert(0, os.path.abspath('.'))
+import os
+import sys
+sys.path.insert(0, os.path.abspath('..'))
 
 
 # -- Project information -----------------------------------------------------
 import pkg_resources
 
 project = 'tempsdb'
-copyright = '2020, Piotr Maślanka'
+copyright = '2020-2024, Piotr Maślanka'
 author = 'Piotr Maślanka'
 
-release = pkg_resources.require("tempsdb")[0].version
+release = '0.6.6'
 
 # -- General configuration ---------------------------------------------------
 

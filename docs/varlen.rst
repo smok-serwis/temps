@@ -41,6 +41,8 @@ Note that the only valid sizes of `size_struct` are:
 Also note that variable length series live in a different namespace than standard
 time series, so you can name them the same.
 
+Also, variable lengths are written using little endian encoding.
+
 Accessing them
 --------------
 

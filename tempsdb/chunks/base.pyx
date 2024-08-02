@@ -438,7 +438,7 @@ cdef class Chunk:
     def __del__(self) -> None:
         if self.is_object_closed or self.closed:
             return
-        warnings.warn('You forgot to close a Chunk')
+        warnings.warn('You forgot to close a Chunk', RuntimeWarning)
         self.close()
 
     cdef tuple get_piece_at(self, unsigned int index):

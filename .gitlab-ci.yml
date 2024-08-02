@@ -1,6 +1,7 @@
 stages:
   - test
   - build
+  - deploy
 
 
 .test_python:
@@ -15,7 +16,7 @@ stages:
     - pip install -r requirements.txt
     - python setup.py build_ext --inplace
   variables:
-    CI: "1"
+    TESTING: "1"
   script:
     - python -m coverage run -m nose2 -vv -F
     - python -m coverage report
@@ -33,7 +34,6 @@ test_python39:
   image: python:3.9
 
 
-
 test_python310:
   extends: .test_python
   image: python:3.10
@@ -46,8 +46,6 @@ test_python311:
 
 
 .build_python:
-  only:
-    - master
   stage: build
   script:
     - pip install --break-system-packages --upgrade Cython setuptools pip
@@ -57,6 +55,14 @@ test_python311:
   artifacts:
     paths:
       - "*.whl"
+  after_script:
+    - pip install twine
+    - TWINE_PASSWORD=${CI_JOB_TOKEN} TWINE_USERNAME=gitlab-ci-token python -m twine upload --repository-url ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/pypi dist/*
+  only:
+    - tags
+  except:
+    - branches
+
 
 build_python38:
   extends: .build_python
@@ -72,10 +78,45 @@ build_python310:
   image: python:3.10
 
 
-build_python38:
+build_python311:
   extends: .build_python
   image: python:3.11
 
+
 build_python311_armv7l:
   extends: .build_python
-  image: zoo.smok.co/build/build:armv7l-python311
+  image: zoo.smok.co/build/build:armv7l-python3.11
+  after_script:
+    - echo "Do nothing"
+
+
+upload_to_twine_python311_armv7l:
+  stage: deploy
+  image: zoo.smok.co/build/build:latest
+  dependencies:
+    - build_python311_armv7l
+  script:
+    - TWINE_PASSWORD=${CI_JOB_TOKEN} TWINE_USERNAME=gitlab-ci-token python -m twine upload --repository-url ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/pypi *.whl
+  only:
+    - tags
+  except:
+    - branches
+
+
+pages:
+  stage: build
+  image: zoo.smok.co/build/build:pages
+  before_script:
+    - pip install --break-system-packages --upgrade Cython setuptools pip
+    - pip install --break-system-packages -r requirements.txt
+    - python3 setup.py build_ext --inplace
+  script:
+    - cd docs
+    - make html
+    - mv _build/html ../public
+  artifacts:
+    paths:
+      - "public"
+  only:
+    - master
+  needs: []

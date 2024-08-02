@@ -1,8 +1,6 @@
 satella
-ujson
 snakehouse>=1.2.3
 six
 nose2
 coverage
-minijson
 Cython

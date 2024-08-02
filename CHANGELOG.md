@@ -3,6 +3,10 @@
 ## v0.6.6
 
 * replaced most signed integers with unsigned
+* fixed most automatic closing of things
+* replaced Warnings will more legible warnings
+* updated documentation
+* moved to our GitLab
 
 ## v0.6.5
 

@@ -61,3 +61,10 @@ Failing to close things
 Please be keen on manually closing things that are no longer necessary.
 Most destructors check for that and will complain if you forget to manually
 close anything.
+
+Following warnings will be raised:
+
+* :code:`RuntimeWarning` - you forgot to close something
+* :code:`FutureWarning` - you enabled an experimental feature
+* :code:`UserWarning` - you messed up something as an user that tempsdb
+    was able to recover from.

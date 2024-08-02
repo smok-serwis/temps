@@ -448,7 +448,7 @@ cdef class VarlenIterator:
 
     def __del__(self):
         if not self.closed:
-            warnings.warn('You forgot to close a VarlenIterator. Please close them explicitly!')
+            warnings.warn('You forgot to close a VarlenIterator. Please close them explicitly!', RuntimeWarning)
             self.close()
 
 

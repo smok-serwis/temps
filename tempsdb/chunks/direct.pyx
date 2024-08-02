@@ -34,15 +34,15 @@ cdef class DirectChunk(Chunk):
                  use_descriptor_access: tp.Optional[bool] = None,
                  int gzip_compression_level = 0):
         if path.endswith('.gz'):
-            warnings.warn('Please pass the path without .gz')
+            warnings.warn('Please pass the path without .gz', UserWarning)
             path = path.replace('.gz', '')
         if path.endswith('.direct'):
-            warnings.warn('Please pass the path without .direct')
+            warnings.warn('Please pass the path without .direct', UserWarning)
             path = path.replace('.direct', '')
         if use_descriptor_access is None:
             use_descriptor_access = False
             if gzip_compression_level:
-                warnings.warn('Gzip support is experimental')
+                warnings.warn('Gzip support is experimental', FutureWarning)
                 use_descriptor_access = True
 
         self.gzip = gzip_compression_level

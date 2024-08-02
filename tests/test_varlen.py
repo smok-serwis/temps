@@ -54,6 +54,7 @@ class TestVarlen(unittest.TestCase):
                 self.assertTrue(ve.slice(0, 4), b'test')
                 self.assertFalse(ve.endswith(b'skerabeusza'))
                 ve = iterator.get_next()
+        varlen.close()
 
     def test_varlen_gzip(self):
         from tempsdb.varlen import create_varlen_series
@@ -72,3 +73,4 @@ class TestVarlen(unittest.TestCase):
         lst = [(ts, v.to_bytes()) for ts, v in it]
         it.close()
         self.assertEqual(lst, series)
+        varlen.close()

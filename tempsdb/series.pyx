@@ -524,7 +524,7 @@ cdef class TimeSeries:
     def __del__(self):
         if not self.closed:
             warnings.warn('You forgot to close TimeSeries. Please explicitly close it when you '
-                          'are done.')
+                          'are done.', RuntimeWarning)
             self.close()
 
 

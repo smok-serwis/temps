@@ -1,8 +1,0 @@
-.git
-.circleci
-docs
-build
-dist
-*.egg-info
-*.c
-*.h

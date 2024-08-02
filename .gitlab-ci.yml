@@ -11,9 +11,16 @@ stages:
     - cd minijson
     - python setup.py install
     - cd ..
+    - rm -rf minijson
     - pip install -r requirements.txt
+    - python setup.py build_ext --inplace
+  variables:
+    CI: "1"
   script:
-    - python setup.py test
+    - python -m coverage run -m nose2 -vv -F
+    - python -m coverage report
+
+
 
 test_python38:
   extends: .test_python

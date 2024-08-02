@@ -58,11 +58,10 @@ cdef class AlternativeMMap:
                 self.io.seek(item, 0)
                 b = self.io.read(1)
                 return b[0]
-            else:
-                start = item.start
-                stop = item.stop
-                self.io.seek(start, 0)
-                return self.io.read(stop-start)
+            start = item.start
+            stop = item.stop
+            self.io.seek(start, 0)
+            return self.io.read(stop-start)
 
     def __setitem__(self, key: tp.Union[int, slice], value: tp.Union[int, bytes]) -> None:
         cdef:
@@ -228,7 +227,7 @@ cdef class Chunk:
         if index > self.entries:
             raise ValueError('index too large')
         cdef unsigned long ofs = HEADER_SIZE + TIMESTAMP_SIZE + index * (self.block_size + TIMESTAMP_SIZE) + byte_index
-        return ord(self.mmap[ofs])
+        return self.mmap[ofs]
 
     cpdef bytes get_slice_of_piece_starting_at(self, unsigned int index, unsigned int start):
         """
